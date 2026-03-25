@@ -1,0 +1,8 @@
+/var/log/vps_maintenance.log {
+    daily                   # 每天轮转一次
+    rotate 7                # 保留最近 7 份日志
+    copytruncate            # 清空原文件而不是删除，适合正在写入的脚本
+    compress                # 压缩旧日志以节省空间
+    missingok               # 如果文件不存在也不报错
+    notifempty              # 如果日志为空则不轮转
+}
