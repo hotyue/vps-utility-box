@@ -17,7 +17,7 @@
 curl -sSO https://raw.githubusercontent.com/hotyue/vps-utility-box/main/deploy.sh && bash deploy.sh
 ```
 
-## ✨ v2.1.1 核心特性
+## ✨ v2.1.2 核心特性
 
 - 交互式菜单: 自由选择开启 CPU、内存或网络模块，支持多选组合。
 
