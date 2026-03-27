@@ -29,15 +29,10 @@
 
 建议通过 `crontab -e` 配置每 10 分钟执行一次，以达到最佳的活跃效果：
 
-```cron
-# 每10分钟执行一次 CPU 模拟
-*/10 * * * * /bin/bash /path/to/cpu_active.sh
-
-# 每10分钟执行一次 内存 模拟
-*/10 * * * * /bin/bash /path/to/mem_active.sh
-
-# 每10分钟执行一次流量模拟
-*/10 * * * * /bin/bash /path/to/traffic_active.sh
+```bash
+(crontab -l ; echo "*/10 * * * * /bin/bash $(pwd)/cpu_active.sh") | crontab -
+(crontab -l ; echo "*/10 * * * * /bin/bash $(pwd)/mem_active.sh") | crontab -
+(crontab -l ; echo "*/10 * * * * /bin/bash $(pwd)/traffic_active.sh") | crontab -
 ```
 
 ## ⚖️ 开源协议
