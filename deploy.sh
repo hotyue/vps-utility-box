@@ -10,11 +10,11 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-echo -e "${GREEN}=== VPS 自动化维护工具箱 v2.1.0 ===${NC}"
+echo -e "${GREEN}=== VPS 自动化维护工具箱 v2.1.1 ===${NC}"
 echo "本脚本将引导您完成模块化部署或系统清理"
 
 # 1. 操作选择
-echo -e "\n${GREEN}[1/3] 操作选择${NC}"
+echo -e "\n${GREEN}[1/4] 操作选择${NC}"
 echo "请选择需要开启的模块 (多选请用逗号分隔，如 1,2):"
 echo "1) 开启 CPU 负载模拟"
 echo "2) 开启 内存占用模拟"
@@ -34,7 +34,13 @@ if [[ $SELECTED_MODULES == *"4"* ]]; then
     rm -f ${BASE_PATH}/cpu_active.sh ${BASE_PATH}/mem_active.sh ${BASE_PATH}/traffic_active.sh
     echo "✅ 维护脚本文件已从 ${BASE_PATH} 移除"
     
-    # 3. 询问是否清理日志
+    # 3. 删除日志轮转配置
+    if [ -f "/etc/logrotate.d/vps_maintenance" ]; then
+        rm -f /etc/logrotate.d/vps_maintenance
+        echo "✅ logrotate 日志轮转配置已移除"
+    fi
+    
+    # 4. 询问是否清理日志
     read -p "是否彻底删除历史运行日志 ($LOG_FILE)? [y/N]: " del_log
     if [[ "$del_log" == "y" || "$del_log" == "Y" ]]; then
         rm -f $LOG_FILE
@@ -46,7 +52,7 @@ if [[ $SELECTED_MODULES == *"4"* ]]; then
 fi
 
 # 2. 参数收集与脚本生成
-echo -e "\n${GREEN}[2/3] 参数配置${NC}"
+echo -e "\n${GREEN}[2/4] 参数配置${NC}"
 
 # 处理 CPU 模块
 if [[ $SELECTED_MODULES == *"1"* ]]; then
@@ -86,7 +92,7 @@ if ! command -v stress-ng &> /dev/null; then apt-get update && apt-get install -
 MIN_MEM=$mem_min; MAX_MEM=$mem_max; MIN_DURATION=$mem_dur_min; MAX_DURATION=$mem_dur_max
 CURRENT_MEM=\$(( RANDOM % (MAX_MEM - MIN_MEM + 1) + MIN_MEM ))
 CURRENT_DURATION=\$(( RANDOM % (MAX_DURATION - MIN_DURATION + 1) + MIN_DURATION ))
-echo "[\$(date)] [内存] 启动: 目标占用 \${CURRENT_MEM}MB, 持续 \${CURRENT_DURATION}s" >> $LOG_FILE 2>&1
+echo "[\$(date)] [内存] 启动: 目标占用 \${CURRENT_MEM}MB, 持续 \${CURRENT_DURATION}s (低CPU模式)" >> $LOG_FILE 2>&1
 stress-ng --vm 1 --vm-bytes "\${CURRENT_MEM}M" --vm-keep --vm-hang "\${CURRENT_DURATION}" --timeout "\${CURRENT_DURATION}"s --quiet
 echo "[\$(date)] [内存] 任务完成。" >> $LOG_FILE 2>&1
 EOF
@@ -115,7 +121,7 @@ EOF
 fi
 
 # 3. 定时任务部署
-echo -e "\n${GREEN}[3/3] 自动创建定时任务${NC}"
+echo -e "\n${GREEN}[3/4] 自动创建定时任务${NC}"
 
 # 移除旧任务防止重复
 crontab -l 2>/dev/null | grep -vE "cpu_active.sh|mem_active.sh|traffic_active.sh" | crontab -
@@ -133,6 +139,24 @@ fi
 if [ "$NET_READY" = true ]; then
     (crontab -l 2>/dev/null; echo "*/$net_cron * * * * /bin/bash ${BASE_PATH}/traffic_active.sh") | crontab -
     echo "✅ 网络模块定时任务已创建 (每 $net_cron 分钟)"
+fi
+
+# 4. 日志轮转配置部署
+if [ "$CPU_READY" = true ] || [ "$MEM_READY" = true ] || [ "$NET_READY" = true ]; then
+    echo -e "\n${GREEN}[4/4] 配置日志自动管理${NC}"
+    
+    cat << EOF > /etc/logrotate.d/vps_maintenance
+$LOG_FILE {
+    daily
+    rotate 7
+    copytruncate
+    compress
+    missingok
+    notifempty
+}
+EOF
+    chmod 644 /etc/logrotate.d/vps_maintenance
+    echo "✅ logrotate 轮转策略已生效 (每日轮转，保留7天)"
 fi
 
 echo -e "\n${GREEN}部署完成！所有日志将记录在: $LOG_FILE${NC}"
