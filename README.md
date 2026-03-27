@@ -9,6 +9,7 @@
 | 模块名称 | 功能描述 | 一键部署指令 (curl) |
 | :--- | :--- | :--- |
 | **CPU 活跃模拟** | 15%~50% 动态负载，100~150s 随机时长 | `curl -sSO https://raw.githubusercontent.com/hotyue/vps-utility-box/main/cpu-active/cpu_active.sh && chmod +x cpu_active.sh` |
+| **内存活跃模拟** | 100~300MB 随机占用，100~150s 随机时长 | `curl -sSO https://raw.githubusercontent.com/hotyue/vps-utility-box/main/mem-active/mem_active.sh && chmod +x mem_active.sh` |
 | **网络流量增强** | 随机下载 20~50MB 流量，自动清理缓存 | `curl -sSO https://raw.githubusercontent.com/hotyue/vps-utility-box/main/traffic-active/traffic_active.sh && chmod +x traffic_active.sh` |
 | **日志自动轮转** | 每日轮转、压缩并保留 7 天维护日志 | `curl -sSO https://raw.githubusercontent.com/hotyue/vps-utility-box/main/log-rotate/vps_maintenance` |
 
@@ -31,6 +32,9 @@
 ```cron
 # 每10分钟执行一次 CPU 模拟
 */10 * * * * /bin/bash /path/to/cpu_active.sh
+
+# 每10分钟执行一次 内存 模拟
+*/10 * * * * /bin/bash /path/to/mem_active.sh
 
 # 每10分钟执行一次流量模拟
 */10 * * * * /bin/bash /path/to/traffic_active.sh
