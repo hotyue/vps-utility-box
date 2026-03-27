@@ -17,7 +17,7 @@
 curl -sSO https://raw.githubusercontent.com/hotyue/vps-utility-box/main/deploy.sh && bash deploy.sh
 ```
 
-## ✨ v2.1.0 核心特性
+## ✨ v2.1.1 核心特性
 
 - 交互式菜单: 自由选择开启 CPU、内存或网络模块，支持多选组合。
 
@@ -31,10 +31,10 @@ curl -sSO https://raw.githubusercontent.com/hotyue/vps-utility-box/main/deploy.s
 
 如果您希望了解底层逻辑或手动独立部署某个模块，请点击下方链接查看各模块的详细参数说明：
 
-- 1. **[CPU-Active](./cpu-active)**: 引入 `stress-ng` 模拟计算压力，负载与时长双维度随机化。
-- 2. **[Mem-Active](./mem-active)**: 利用 `--vm-hang` 实现纯净的物理内存挂起，不产生高频读写，CPU 零负担。
-- 3. **[Traffic-Active](./traffic-active)**: 模拟下行带宽占用，采用官方镜像源，下载后秒删，0 磁盘占用。
-- 4. **[Log-Rotate](./log-rotate)**: 专为本工具箱设计的日志滚动策略，确保磁盘空间不被运行日志撑爆。
+-  **[CPU-Active](./cpu-active)**: 引入 `stress-ng` 模拟计算压力，负载与时长双维度随机化。
+-  **[Mem-Active](./mem-active)**: 利用 `--vm-hang` 实现纯净的物理内存挂起，不产生高频读写，CPU 零负担。
+-  **[Traffic-Active](./traffic-active)**: 模拟下行带宽占用，采用官方镜像源，下载后秒删，0 磁盘占用。
+-  **[Log-Rotate](./log-rotate)**: 专为本工具箱设计的日志滚动策略，确保磁盘空间不被运行日志撑爆。
 
 ## ⚖️ 开源协议
 
