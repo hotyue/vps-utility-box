@@ -18,6 +18,7 @@ curl -sSO https://raw.githubusercontent.com/hotyue/vps-utility-box/main/deploy.s
 ```
 
 ## ✨ v2.1.0 核心特性
+
 - 交互式菜单: 自由选择开启 CPU、内存或网络模块，支持多选组合。
 
 - 全自定义参数: 部署过程中可实时设定负载区间（如 CPU 15%-50%）、运行时长及 Cron 执行频率。
@@ -27,19 +28,18 @@ curl -sSO https://raw.githubusercontent.com/hotyue/vps-utility-box/main/deploy.s
 - 动态防检测: 告别死板的满载运行，利用随机数生成业务级波动，安全且隐蔽。
 
 ## 📦 模块详情指引
+
 如果您希望了解底层逻辑或手动独立部署某个模块，请点击下方链接查看各模块的详细参数说明：
 
-- CPU-Active: 引入 stress-ng 模拟计算压力，负载与时长双维度随机化。
+- 1. **[CPU-Active](./cpu-active)**: 引入 `stress-ng` 模拟计算压力，负载与时长双维度随机化。
+- 2. **[Mem-Active](./mem-active)**: 利用 `--vm-hang` 实现纯净的物理内存挂起，不产生高频读写，CPU 零负担。
+- 3. **[Traffic-Active](./traffic-active)**: 模拟下行带宽占用，采用官方镜像源，下载后秒删，0 磁盘占用。
+- 4. **[Log-Rotate](./log-rotate)**: 专为本工具箱设计的日志滚动策略，确保磁盘空间不被运行日志撑爆。
 
-- Mem-Active: 利用 --vm-hang 实现纯净的物理内存挂起，不产生高频读写，CPU 零负担。
+## ⚖️ 开源协议
 
-- Traffic-Active: 模拟下行带宽占用，采用官方镜像源，下载后秒删，0 磁盘占用。
-
-- Log-Rotate: 专为本工具箱设计的日志滚动策略，确保磁盘空间不被运行日志撑爆。
+本项目采用 MIT License 开源协议。您可以自由地使用、修改和分发本仓库中的代码。
 
 ## 📈 Stargazers over time
 
 [![Stargazers over time](https://starchart.cc/hotyue/vps-utility-box.svg?variant=adaptive)](https://starchart.cc/hotyue/vps-utility-box)
-
-## ⚖️ 开源协议
-本项目采用 MIT License 开源协议。您可以自由地使用、修改和分发本仓库中的代码。
