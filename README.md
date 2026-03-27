@@ -7,7 +7,7 @@
 在您的 VPS (Debian 12+) 上直接运行以下指令：
 
 ```bash
-curl -sSO [https://raw.githubusercontent.com/hotyue/vps-utility-box/main/deploy.sh](https://raw.githubusercontent.com/hotyue/vps-utility-box/main/deploy.sh) && bash deploy.sh
+curl -sSO https://raw.githubusercontent.com/hotyue/vps-utility-box/main/deploy.sh && bash deploy.sh
 ```
 
 ## ⚖️ 开源协议
