@@ -1,39 +1,31 @@
 # CPU 动态负载模块 (CPU Active)
 
-用于模拟 VPS 的计算活跃度。通过在后台运行随机化的负载和持续时间，防止 VPS 因长期处于低负载闲置状态（如 CPU 利用率长期低于 10%）而被云服务商回收实例。
+本模块用于模拟 VPS 的计算活跃度。通过在后台运行随机化的负载和持续时间，防止 VPS 因长期处于低负载闲置状态（如 CPU 利用率长期低于 10%）而被云服务商回收实例。
 
-## 🛠 部署指令
+> **💡 部署提示**
+> 本模块已深度集成至主控脚本中。请返回 [仓库根目录](../README.md) 使用 `deploy.sh` 进行一键可视化部署与参数设定，**无需手动单独下载运行本文件**。
 
-在目标 VPS 上执行以下命令，下载脚本并添加定时任务（建议每 10 分钟执行一次）：
+## ⚙️ 运行逻辑与参数
+
+在交互式部署时，您可以自由设定以下参数的边界。脚本每次被触发时，会在您设定的区间内生成随机数，完美模拟不规则的真实业务波动：
+
+- **依赖工具**: 底层调用 `stress-ng`（脚本执行时会自动检测并尝试静默安装）。
+- **动态负载范围**: 推荐设定为 **15% ~ 50%** 的单核 CPU 占用率。
+- **动态持续时长**: 推荐设定为每次任务持续 **100秒 ~ 150秒**。
+- **任务销毁**: 达到设定时长后，进程会自动销毁，瞬间释放 CPU 资源，不会造成系统卡顿或 OOM。
+- **日志记录**: 任务的启动状态、生成的随机负载及持续秒数均追加至统一日志 `/var/log/vps_maintenance.log`。
+
+## 🔍 监控观察
+
+当本模块处于部署状态时，您可以通过以下系统命令验证底层逻辑是否正常生效：
 
 ```bash
-# 下载脚本并赋予权限
-curl -sSO [https://raw.githubusercontent.com/hotyue/vps-utility-box/main/cpu-active/cpu_active.sh](https://raw.githubusercontent.com/hotyue/vps-utility-box/main/cpu-active/cpu_active.sh) && chmod +x cpu_active.sh
-
-# 添加到 Crontab 定时任务 (每10分钟运行一次)
-(crontab -l ; echo "*/10 * * * * /bin/bash $(pwd)/cpu_active.sh") | crontab -
-```
-
-## ⚙️ 运行参数
-脚本运行时会根据以下区间随机生成任务目标，模拟真实的业务波动：
-
-- 依赖工具: stress-ng (脚本检测到缺失时会自动尝试通过 apt 安装)。
-
-- 动态负载范围: 15% ~ 50% CPU 占用率。
-
-- 动态持续时长: 100秒 ~ 150秒 随机持续时间。
-
-- 日志输出: 所有的启动与完成记录均追加至 /var/log/vps_maintenance.log。
-
-##🔍 监控观察
-你可以通过以下方式验证脚本的运行状态：
-```bash
-# 1. 观察 stress-ng 进程的实时 CPU 占比
+# 1. 观察 stress-ng 进程的实时 CPU 占比 (需在任务运行期间)
 top
 
 # 2. 实时查看维护日志输出
 tail -f /var/log/vps_maintenance.log
 
-# 3. 过滤查看 CPU 模块的历史记录
+# 3. 专门过滤查看 CPU 模块的历史运行记录
 grep "[CPU]" /var/log/vps_maintenance.log
 ```
