@@ -40,6 +40,12 @@ curl -sSO https://raw.githubusercontent.com/hotyue/vps-utility-box/main/deploy.s
 
 本项目采用 MIT License 开源协议。您可以自由地使用、修改和分发本仓库中的代码。
 
-## 📈 Stargazers over time
+## Star History
 
-[![Stargazers over time](https://starchart.cc/hotyue/vps-utility-box.svg?variant=adaptive)](https://starchart.cc/hotyue/vps-utility-box)
+<a href="https://www.star-history.com/?repos=hotyue%2Fvps-utility-box&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/image?repos=hotyue/vps-utility-box&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/image?repos=hotyue/vps-utility-box&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/image?repos=hotyue/vps-utility-box&type=date&legend=top-left" />
+ </picture>
+</a>
