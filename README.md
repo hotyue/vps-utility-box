@@ -14,7 +14,7 @@
 在您的 VPS (推荐 Debian/Ubuntu 环境) 上直接运行以下交互式指令：
 
 ```bash
-curl -sSO https://git.94211762.xyz/hotyue/vps-utility-box/raw/branch/main/deploy.sh && bash deploy.sh
+curl -sSO https://raw.githubusercontent.com/hotyue/vps-utility-box/refs/heads/main/deploy.sh && bash deploy.sh
 ```
 
 ## ✨ v2.1.2 核心特性
