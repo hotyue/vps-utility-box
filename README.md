@@ -1,6 +1,7 @@
 # 杂货铺 (vps-utility-box) 🏪
 
 ![License](https://img.shields.io/github/license/hotyue/vps-utility-box)
+![Installs](https://img.shields.io/endpoint?url=https://ip-sentinel-count.samanthaestime296.workers.dev/stats/vps_box)
 ![Release](https://img.shields.io/github/v/release/hotyue/vps-utility-box)
 ![Last Commit](https://img.shields.io/github/last-commit/hotyue/vps-utility-box)
 ![Repo Size](https://img.shields.io/github/repo-size/hotyue/vps-utility-box)

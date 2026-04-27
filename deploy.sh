@@ -160,3 +160,16 @@ EOF
 fi
 
 echo -e "\n${GREEN}部署完成！所有日志将记录在: $LOG_FILE${NC}"
+
+# ==========================================
+# 📡 玻璃房透明装机统计 (复用官方节点)
+# ==========================================
+echo -e "\n📡 正在向开源社区汇报装机量 (完全匿名，无 IP 记录)..."
+BOX_COUNT=$(curl -s -m 3 "https://ip-sentinel-count.samanthaestime296.workers.dev/ping/vps_box" || echo "")
+
+if [ -n "$BOX_COUNT" ] && [[ "$BOX_COUNT" =~ ^[0-9]+$ ]]; then
+    echo -e "\033[32m🎉 感谢您成为全球第 ${BOX_COUNT} 名使用杂货铺的极客！\033[0m"
+else
+    echo -e "\033[32m🎉 感谢您使用杂货铺！\033[0m"
+fi
+echo -e "\n"
